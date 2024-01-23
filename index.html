@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+body {
+	background-color: #FFF;
+	margin: 30px;
+	margin-top: 10px;
+}
+#contentContainer {
+	width: 550px;
+	height: 350px;
+	border: 5px black solid;
+	overflow: hidden;
+	background-color: #F2F2F2;
+	cursor: pointer;
+}
+#thing {
+	position: relative;
+	left: 50px;
+	top: 50px;
+	transition: left .5s cubic-bezier(.42,-0.3,.78,1.25), 
+				top .5s cubic-bezier(.42,-0.3,.78,1.25);
+}
+</style>
+
+    <div>
+<div id="contentContainer">
+<img id="thing" alt="the thing" height="67" src="//www.kirupa.com/images/smiley_red.png" width="67">
+</div>
+</div>
+<script src="//www.kirupa.com/html5/examples/js/prefixfree.min.js"></script>
+<script>
+var theThing = document.querySelector("#thing");
+var container = document.querySelector("#contentContainer");
+
+container.addEventListener("click", getClickPosition, false);
+
+function getClickPosition(e) {
+	var parentPosition = getPosition(e.currentTarget);
+	var xPosition = e.clientX - parentPosition.x - (theThing.clientWidth / 2);
+	var yPosition = e.clientY - parentPosition.y - (theThing.clientHeight / 2);
+	
+	theThing.style.left = xPosition + "px";
+	theThing.style.top = yPosition + "px";
+}
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+
+  while (el) {
+    if (el.tagName == "BODY") {
+      // deal with browser quirks with body/window/document and page scroll
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+    }
+
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317" integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA==" data-cf-beacon='{"rayId":"849a1c2bdbc611b1","version":"2024.1.0","token":"1561326342c44c8eb0c49276e70b976a"}' crossorigin="anonymous"></script>
+</html>
